@@ -52,32 +52,31 @@ for j in range(0,N):
   Bj[j] = deltaJ[j]*2
 
 
-# Calculating the objective for 6 approximiation rounding algorithm
+# Calculating the final facilities and cost
 FC_used = [False for i in range(0,500)]
 deltaJ_sorted = sorted(deltaJ)
 FINAL_FACILITY = []
-TOTAL = 0
 TOTAL_COST = 0
 F = 40.16
+COUNT = 0 # Count the number of clients, not facilities
 
 for val in deltaJ_sorted:
-  min_deltaJ_idx = deltaJ.index(val)
+  min_deltaJ_idx = deltaJ.index(val) # Getting the index of minimum of smallest deltaJ
   
-  if(FC_used[min_deltaJ_idx]):
+  if FC_used[min_deltaJ_idx] == True: # Check for city is already assigned to a facility or a facility 
     continue
-  FINAL_FACILITY.append(min_deltaJ_idx)
-  TOTAL_COST += F*FACILITIES[min_deltaJ_idx]
-
-  COUNT = 0
+  
+  FINAL_FACILITY.append(min_deltaJ_idx) # Add the current facility in the final facility list
+  TOTAL_COST += F #* FACILITIES[min_deltaJ_idx] # Adding facility opening cost towards the total cost
+  
   
   for i in range(0,500):
-    if i not in FINAL_FACILITY and DISTANCES[min_deltaJ_idx][i] <= Bj[min_deltaJ_idx] and FC_used[i] == False:
-      FC_used[i] = True
+    if i not in FINAL_FACILITY and DISTANCES[min_deltaJ_idx][i] <= Bj[min_deltaJ_idx] and FC_used[i] == False: # Check if distance(facility->client) <= Bj
+      FC_used[i] = True 
       COUNT+=1
-      TOTAL+=1
-      TOTAL_COST += DISTANCES[min_deltaJ_idx][i] * CONNECTIONS[min_deltaJ_idx][i]
-
-print("------------------------------------------------------------------------------------------------------\n")
+      TOTAL_COST += DISTANCES[min_deltaJ_idx][i] # * CONNECTIONS[min_deltaJ_idx][i] # Adding the distance towards total cost
+      
+print("######################################################################################################\n")
 print("Object for 6 Approximiation rounding : ", TOTAL_COST)
 print("Number of Facilities : ", len(FINAL_FACILITY))
 print("Facilities open : ", FINAL_FACILITY)
@@ -118,7 +117,7 @@ for val in deltaJ_4APX_sorted:
   if(FC_used_4APX[min_deltaJ_idx] == True):
     continue
   FINAL_FACILITY_4APX.append(min_deltaJ_idx)
-  TOTAL_COST_4APX += F * FACILITIES_4APX[min_deltaJ_idx]
+  TOTAL_COST_4APX += F #* FACILITIES_4APX[min_deltaJ_idx]
 
   COUNT = 0
   
@@ -127,7 +126,7 @@ for val in deltaJ_4APX_sorted:
       FC_used_4APX[i] = True
       COUNT+=1
       TOTAL+=1
-      TOTAL_COST_4APX += DISTANCES[min_deltaJ_idx][i] * CONNECTIONS_4APX[min_deltaJ_idx][i]
+      TOTAL_COST_4APX += DISTANCES[min_deltaJ_idx][i] #* CONNECTIONS_4APX[min_deltaJ_idx][i]
 
 
 print("Object for 4 Approximiation rounding : ", TOTAL_COST_4APX)
