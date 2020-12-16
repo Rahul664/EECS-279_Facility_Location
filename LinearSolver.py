@@ -1,5 +1,8 @@
 # Importing libraries
+<<<<<<< HEAD
 import numpy as np
+=======
+>>>>>>> LinearSolver
 import math
 import sys
 import csv
@@ -16,7 +19,11 @@ def load_data(PATH):
 		cities.append([x,y])
 	return cities
 
+<<<<<<< HEAD
 PATH = "/home/ad26/Courses/EECS-279/Project/"
+=======
+PATH = "/home/ad26/Courses/EECS-279/Project/EECS-279_Facility_Location/"
+>>>>>>> LinearSolver
 CITIES = load_data(PATH+"500-us-city-coordinates.txt")
 
 
@@ -38,20 +45,37 @@ for i in range(0,500):
 solver = LpProblem("FacilityLocation",LpMinimize)
 
 # DECISION VARIABLE
+<<<<<<< HEAD
 client_facility = LpVariable.dicts("clientTOfacility",[(i,j) for i in CLIENT for j in FACILITY],0,1,cat='Continuous')
 faclity_indicator = LpVariable.dicts("openedFacility",FACILITY,0,1,cat='Continuous')
 
 # OBJECTIVE FUNCTION
 f = 1 # Facility opening cost determined by Local search algorithm
 solver += lpSum(f * faclity_indicator[i] for i in FACILITY) + lpSum(DISTANCES[i][j] * client_facility[(i,j)] for i in FACILITY for j in CLIENT)
+=======
+client_facility = LpVariable.dicts("clientTOfacility",[(i,j) for i in CLIENT for j in FACILITY],0,cat='Continuous')
+faclity_indicator = LpVariable.dicts("openedFacility",FACILITY,0,cat='Continuous')
+
+# OBJECTIVE FUNCTION
+f = 40 # Facility opening cost determined by Local search algorithm
+solver += lpSum(f * faclity_indicator[i] for i in FACILITY) + lpSum(DISTANCES[i][j] * client_facility[(i,j)] for i in CLIENT for j in FACILITY)
+>>>>>>> LinearSolver
 
 # CONSTRAINTS
 for i in CLIENT:
   solver += lpSum(client_facility[(i,j)] for j in FACILITY) == 1 # CONSTRAINT 1
 
+<<<<<<< HEAD
 for i in CLIENT:
   for j in FACILITY:
     solver+= client_facility[(i,j)] - faclity_indicator[i] <= 0
+=======
+for i in CLIENT: # CONSTRAINT 2
+  for j in FACILITY:
+    solver+= (faclity_indicator[i] - client_facility[(i,j)])  >= 0
+
+# solver += lpSum(faclity_indicator[i] for i in FACILITY) == 19 # CONSTRAINT 3
+>>>>>>> LinearSolver
 
 
 # SOLUTION
@@ -66,7 +90,10 @@ write_solver.close()
 csv_file_1 = open(PATH+"facility_cost.csv",'w+')
 csv_writer = csv.writer(csv_file_1)
 for i in FACILITY:
+<<<<<<< HEAD
   # line = str(i)+','+str(faclity_indicator[i].varValue)+"\n"
+=======
+>>>>>>> LinearSolver
   csv_writer.writerow([i,faclity_indicator[i].varValue])
 
 
@@ -75,6 +102,9 @@ csv_file = open(PATH+"connection-costs.csv",'w+')
 csv_writer = csv.writer(csv_file)
 for i in CLIENT:
   for j in FACILITY:
+<<<<<<< HEAD
     # cost = client_facility[i,j].varValue
     # line = client_facility[i,j]+','+str(cost)
+=======
+>>>>>>> LinearSolver
     csv_writer.writerow([i,j,client_facility[i,j].varValue])
