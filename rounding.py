@@ -57,7 +57,7 @@ FC_used = [False for i in range(0,500)]
 deltaJ_sorted = sorted(deltaJ)
 FINAL_FACILITY = []
 TOTAL_COST = 0
-F = 40.16
+F = 40
 COUNT = 0 # Count the number of clients, not facilities
 
 for val in deltaJ_sorted:

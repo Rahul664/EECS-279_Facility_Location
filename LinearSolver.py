@@ -1,5 +1,4 @@
 # Importing libraries
-import numpy as np
 import math
 import sys
 import csv
@@ -38,11 +37,11 @@ for i in range(0,500):
 solver = LpProblem("FacilityLocation",LpMinimize)
 
 # DECISION VARIABLE
-client_facility = LpVariable.dicts("clientTOfacility",[(i,j) for i in CLIENT for j in FACILITY],0,1,cat='Continuous')
-faclity_indicator = LpVariable.dicts("openedFacility",FACILITY,0,1,cat='Continuous')
+client_facility = LpVariable.dicts("clientTOfacility",[(i,j) for i in CLIENT for j in FACILITY],0,cat='Continuous')
+faclity_indicator = LpVariable.dicts("openedFacility",FACILITY,0,cat='Continuous')
 
 # OBJECTIVE FUNCTION
-f = 40.18 # Facility opening cost determined by Local search algorithm
+f = 40 # Facility opening cost determined by Local search algorithm
 solver += lpSum(f * faclity_indicator[i] for i in FACILITY) + lpSum(DISTANCES[i][j] * client_facility[(i,j)] for i in CLIENT for j in FACILITY)
 
 # CONSTRAINTS
@@ -51,7 +50,10 @@ for i in CLIENT:
 
 for i in CLIENT: # CONSTRAINT 2
   for j in FACILITY:
-    solver+= client_facility[(i,j)] - faclity_indicator[i] <= 0
+    solver+= (faclity_indicator[i] - client_facility[(i,j)])  >= 0
+
+# solver += lpSum(faclity_indicator[i] for i in FACILITY) == 19 # CONSTRAINT 3
+
 
 # SOLUTION
 solver.solve()
