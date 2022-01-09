@@ -6,4 +6,7 @@ K-Median problem can be formulated to solve the Facility Location Problem. In th
 In this implementation project we implement at three algorithmic type approaches to solve facility location problem.
 • Local Search (1-Swap) K-Median heuristics.
 • Linear Programming with rounding (6 - Approximiation).
-• Linear Programming with rounding (4 - Approximiation)
+• Linear Programming with rounding (4 - Approximiation).
+
+Please find detailed report of this project in below document.
+https://github.com/Rahul664/EECS-279_Facility_Location/blob/main/final_report.pdf
